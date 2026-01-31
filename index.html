@@ -3,161 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UTeM Hub - Moyen</title>
+    <title>UTeM Hub - Moyen Edition</title>
+    
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#003366">
+    <meta property="og:title" content="UTeM Student Hub - Moyen Edition">
+    <meta property="og:description" content="Akses pantas portal UTeM, nota peribadi dan jadual waktu di satu tempat.">
+    <meta property="og:image" content="utem logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #00aaff;
-            --utem-blue: #003366;
             --glass: rgba(255, 255, 255, 0.08);
             --border: rgba(255, 255, 255, 0.15);
+            --bg-dark: #050505;
         }
 
         body {
-            background: radial-gradient(circle at top, #001a33 0%, #050505 100%);
+            background: radial-gradient(circle at top, #001a33 0%, var(--bg-dark) 100%);
             color: white;
             font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             overflow-x: hidden;
         }
 
-        /* ✨ Background Effects */
+        /* ✨ Visual Effects */
         .bg-glow {
-            position: fixed;
-            top: -100px;
-            width: 400px; height: 400px;
-            background: var(--primary);
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: -1;
+            position: fixed; top: -100px; width: 400px; height: 400px;
+            background: var(--primary); filter: blur(150px); opacity: 0.15; z-index: -1;
         }
 
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            cursor: pointer;
-        }
-
+        .header { text-align: center; padding: 40px 20px; cursor: pointer; user-select: none; }
         .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            margin: 0;
-            letter-spacing: 5px;
-            background: linear-gradient(90deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+            font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin: 0;
+            letter-spacing: 4px; background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 170, 255, 0.4);
         }
 
-        /* 📦 Categories & Grid */
-        .category-container {
-            width: 90%;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-
+        /* 📦 Grid & Categories */
+        .container { width: 90%; max-width: 500px; margin-bottom: 25px; }
         .category-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--primary);
-            margin: 0 0 15px 10px;
-            display: flex;
-            align-items: center;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--primary); margin: 0 0 12px 10px; display: flex; align-items: center;
         }
+        .category-label::after { content: ''; flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--primary), transparent); margin-left: 15px; }
 
-        .category-label::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-            margin-left: 15px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--border);
+            border-radius: 20px; padding: 18px; text-align: center; text-decoration: none; color: white;
+            transition: 0.3s; display: flex; flex-direction: column; align-items: center;
         }
-
         .card:active { transform: scale(0.92); border-color: var(--primary); background: rgba(0, 170, 255, 0.1); }
+        .card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
+        .card p { margin: 0; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9; }
+        .full-width { grid-column: span 2; flex-direction: row; justify-content: center; gap: 15px; }
 
-        .card img { width: 65px; height: 65px; object-fit: contain; margin-bottom: 12px; }
+        /* 📅 Timetable & Notes */
+        .timetable-display {
+            width: 100%; min-height: 50px; background: var(--glass); border: 2px dashed var(--border);
+            border-radius: 15px; margin-top: 10px; overflow: hidden; display: none; /* Toggle control */
+            position: relative; transition: 0.3s;
+        }
+        .timetable-display.active { display: flex; justify-content: center; align-items: center; }
+        .timetable-display img { width: 100%; height: auto; }
 
-        .card p { margin: 0; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9; }
+        .btn-action {
+            background: var(--glass); border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 15px; border-radius: 50px; font-size: 0.75rem; font-weight: bold;
+            cursor: pointer; margin-top: 10px; transition: 0.3s; display: inline-block;
+        }
+        .btn-action:hover { background: var(--primary); color: white; }
 
-        .full-width { grid-column: span 2; flex-direction: row; justify-content: center; gap: 20px; }
-        .full-width img { margin-bottom: 0; width: 50px; }
-
-        /* 🎊 Notification Popup Style */
-        #install-success {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 170, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--primary);
-            padding: 15px 25px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 10002;
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+        .notes-area {
+            width: 100%; height: 120px; background: var(--glass); border: 1px solid var(--border);
+            border-radius: 15px; padding: 12px; color: white; font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem; resize: none; box-sizing: border-box; outline: none; margin-top: 10px;
         }
 
+        /* 🎊 UI Popups */
+        #install-success {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 170, 255, 0.2); backdrop-filter: blur(15px);
+            border: 1px solid var(--primary); padding: 12px 20px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px; z-index: 10000; transition: 0.6s;
+        }
         #install-success.show { bottom: 30px; }
 
-        /* 🐱 Easter Egg Modal */
         #moyen-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            backdrop-filter: blur(20px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.96); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 10001; backdrop-filter: blur(20px);
         }
-
         .profile-card {
-            background: #111;
-            padding: 30px;
-            border-radius: 30px;
-            border: 2px solid var(--primary);
-            text-align: center;
-            width: 85%;
-            max-width: 320px;
-            box-shadow: 0 0 50px rgba(0, 170, 255, 0.3);
+            background: #111; padding: 30px; border-radius: 25px; border: 2px solid var(--primary);
+            text-align: center; width: 80%; max-width: 320px;
         }
-
-        .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 20px; object-fit: cover; }
-        .single-tag { color: #ff4444; font-weight: bold; border: 1px solid #ff4444; padding: 5px 20px; border-radius: 20px; display: inline-block; margin-top: 15px; font-size: 0.9rem; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -168,7 +115,22 @@
         <h1>UTEM HUB</h1>
     </div>
 
-    <div class="category-container">
+    <div class="container">
+        <div class="category-label">Jadual Waktu</div>
+        <div id="timetable-box" class="timetable-display">
+            <p id="placeholder-text" style="opacity: 0.5;">Belum dimuat naik.</p>
+            <img id="timetable-img" src="" alt="Jadual">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-action" onclick="toggleTimetable()">Buka/Tutup Jadual</button>
+            <label class="btn-action">
+                Muat Naik <input type="file" id="file-input" accept="image/*" style="display: none;">
+            </label>
+            <button class="btn-action" style="border-color: #ff4444; color: #ff4444;" onclick="removeTimetable()">Padam</button>
+        </div>
+    </div>
+
+    <div class="container">
         <div class="category-label">Akademik</div>
         <div class="grid">
             <a href="https://portal.utem.edu.my/iutem/" class="card">
@@ -180,84 +142,122 @@
                 <p>ULEARN HUB</p>
             </a>
             <a href="https://outlook.office.com/" class="card full-width">
-                <img src="utem mail.png" alt="Email">
+                <img src="utem mail.png" alt="Email" style="width: 40px; height: 40px;">
                 <p>UTEM OFFICIAL EMAIL</p>
             </a>
         </div>
     </div>
 
-    <div class="category-container">
-        <div class="category-label">Sumber & Peperiksaan</div>
+    <div class="container">
+        <div class="category-label">Sumber Peperiksaan</div>
         <div class="grid">
             <a href="https://library2.utem.edu.my/exampaper/" class="card">
-                <img src="2018 till latest.png" alt="New">
+                <img src="2018 till latest.png" alt="2018">
                 <p>PAST YEAR (2018+)</p>
             </a>
             <a href="https://library1.utem.edu.my/exampaper/" class="card">
-                <img src="2001 till 2017.png" alt="Old">
+                <img src="2001 till 2017.png" alt="2001">
                 <p>PAST YEAR (OLD)</p>
-            </a>
-            <a href="https://rbs.utem.edu.my/plh/web/search.php" class="card">
-                <img src="room booking.png" alt="Room">
-                <p>ROOM BOOKING</p>
-            </a>
-            <a href="https://plhutem.remotexs.co/user/login" class="card">
-                <img src="plh login.png" alt="Login">
-                <p>PLH LOGIN</p>
             </a>
         </div>
     </div>
 
-    <div class="category-container">
-        <div class="category-label">Servis Kampus</div>
-        <div class="grid">
-            <a href="https://utem-360.netlify.app/#/campus" class="card">
-                <img src="utem 360.png" alt="360">
-                <p>360 TOUR</p>
-            </a>
-            <a href="https://form.jotform.com/dentalpkuutem/e-appointment" class="card">
-                <img src="pkd dental.jpg" alt="Dental">
-                <p>DENTAL APPT</p>
-            </a>
-        </div>
+    <div class="container">
+        <div class="category-label">Workspace Peribadi</div>
+        <textarea id="quick-notes" class="notes-area" placeholder="Nota ringkas anda di sini..."></textarea>
+        <p id="save-status" style="font-size: 0.6rem; color: var(--primary); text-align: right; margin-top: 5px;">CORE READY</p>
     </div>
 
     <div id="install-success">
-        <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold;">✓</div>
-        <p style="margin: 0; font-size: 0.9rem; font-weight: bold; letter-spacing: 1px;">SYSTEM INSTALLED</p>
+        <div style="background: var(--primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 0.7rem;">✓</div>
+        <p style="margin: 0; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;">SYSTEM INSTALLED</p>
     </div>
 
     <div id="moyen-modal">
         <div class="profile-card">
             <img src="moyen.jpg" class="profile-img">
-            <h3 style="margin:0; font-family:'Orbitron'; color:var(--primary);">MOYEN</h3>
-            <p style="margin:10px 0 0 0; font-size: 0.9rem; opacity: 0.8;">FARIS HADIF BIN MOHD FAISAL</p>
-            <p style="margin:5px 0 0 0; font-size: 0.8rem;">D132510136 | Diploma Kejuruteraan Mekanikal</p>
-            <div class="single-tag">STILL SINGLE</div>
+            <h3 style="margin: 0; color: var(--primary); font-family: 'Orbitron';">MOYEN</h3>
+            <p style="font-size: 0.8rem; margin: 10px 0;">FARIS HADIF BIN MOHD FAISAL</p>
+            <p style="font-size: 0.7rem; opacity: 0.7;">D132510136 | Diploma Kejuruteraan Mekanikal</p>
+            <div style="color: #ff4444; border: 1px solid #ff4444; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; font-weight: bold;">STILL SINGLE</div>
             <br><br>
-            <button onclick="document.getElementById('moyen-modal').style.display='none'" style="background: var(--primary); border:none; padding: 12px 25px; border-radius: 12px; color:white; font-weight:bold; cursor:pointer;">CLOSE SYSTEM</button>
+            <button class="btn-action" onclick="document.getElementById('moyen-modal').style.display='none'">Tutup</button>
         </div>
     </div>
 
     <script>
-        // 🚀 Detect PWA Installation Success
-        window.addEventListener('appinstalled', (evt) => {
-            const popup = document.getElementById('install-success');
-            popup.classList.add('show');
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            setTimeout(() => popup.classList.remove('show'), 5000);
+        // 1. Logik Jadual Waktu & Toggle
+        const fileInput = document.getElementById('file-input');
+        const timetableBox = document.getElementById('timetable-box');
+        const timetableImg = document.getElementById('timetable-img');
+        const placeholderText = document.getElementById('placeholder-text');
+
+        function toggleTimetable() { timetableBox.classList.toggle('active'); }
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    localStorage.setItem('moyen_timetable', e.target.result);
+                    renderTimetable(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
         });
 
-        // 🐱 Secret Access
+        function renderTimetable(src) {
+            timetableImg.src = src;
+            timetableImg.style.display = 'block';
+            placeholderText.style.display = 'none';
+            timetableBox.classList.add('active');
+        }
+
+        function removeTimetable() {
+            if(confirm("Padam jadual?")) {
+                localStorage.removeItem('moyen_timetable');
+                location.reload();
+            }
+        }
+
+        // 2. Logik Quick Notes
+        const notesArea = document.getElementById('quick-notes');
+        const saveStatus = document.getElementById('save-status');
+
+        notesArea.addEventListener('input', () => {
+            saveStatus.innerText = 'SAVING...';
+            localStorage.setItem('moyen_notes', notesArea.value);
+            setTimeout(() => { saveStatus.innerText = 'CHANGES SECURED'; }, 800);
+        });
+
+        // 3. Easter Egg & Initial Load
         let taps = 0;
         function checkEasterEgg() {
             taps++;
             if(taps === 5) {
                 document.getElementById('moyen-modal').style.display = 'flex';
+                if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
                 taps = 0;
-                if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
             }
             setTimeout(() => taps = 0, 3000);
+        }
+
+        window.addEventListener('load', () => {
+            const sn = localStorage.getItem('moyen_notes');
+            if(sn) notesArea.value = sn;
+            const st = localStorage.getItem('moyen_timetable');
+            if(st) renderTimetable(st);
+        });
+
+        // 4. Install Detection
+        window.addEventListener('appinstalled', () => {
+            const popup = document.getElementById('install-success');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4000);
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
