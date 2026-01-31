@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UTeM Hub - Moyen Edition</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#003366">
+    
+    <style>
+        :root {
+            --primary: #003366;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #ffffff;
+            --accent: #00aaff;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 35px 0;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--dark-bg) 100%);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card img {
+            width: 80px; /* Saiz ikon diselaraskan */
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .card p { margin: 0; font-size: 0.75rem; font-weight: bold; }
+        .wide { grid-column: span 2; }
+
+        /* Easter Egg Modal */
+        #moyen-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        .moyen-profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header" onclick="checkEasterEgg()">
+    <h1>STUDENT DASHBOARD</h1>
+</div>
+
+<div class="grid-container">
+    <a href="https://outlook.office.com/" class="card">
+        <img src="utem mail.png" alt="Email"> <p>UTeM EMAIL</p>
+    </a>
+
+    <a href="https://portal.utem.edu.my/iutem/" class="card">
+        <img src="utem portal.png" alt="Portal">
+        <p>iUTeM PORTAL</p>
+    </a>
+
+    <a href="https://ulearn.utem.edu.my/hub/" class="card">
+        <img src="ulearn.png" alt="ULearn">
+        <p>ULEARN HUB</p>
+    </a>
+
+    <a href="https://library2.utem.edu.my/exampaper/" class="card">
+        <img src="2018 till latest.png" alt="PastYear">
+        <p>PAST YEAR (2018+)</p>
+    </a>
+
+    <a href="https://rbs.utem.edu.my/plh/web/search.php" class="card">
+        <img src="room booking.png" alt="Room">
+        <p>ROOM BOOKING</p>
+    </a>
+
+    <a href="https://form.jotform.com/dentalpkuutem/e-appointment" class="card">
+        <img src="pkd dental.jpg" alt="Dental">
+        <p>DENTAL APPT</p>
+    </a>
+
+    <a href="https://utem-360.netlify.app/#/campus" class="card wide">
+        <img src="utem 360.png" alt="360" style="height: 60px;">
+        <p>UTEM 360 TOUR</p>
+    </a>
+
+    <a href="https://library1.utem.edu.my/exampaper/" class="card">
+        <img src="2001 till 2017.png" alt="OldExam">
+        <p>PAST YEAR (OLD)</p>
+    </a>
+
+    <a href="https://plhutem.remotexs.co/user/login" class="card">
+        <div style="font-size: 3rem; margin-bottom: 5px;">🔑</div>
+        <p>PLH LOGIN</p>
+    </a>
+</div>
+
+<div id="moyen-modal">
+    <img src="moyen.jpg" class="moyen-profile-img">
+    <h2>DEVELOPED BY MOYEN</h2>
+    <p>Email: farissmoyen@gmail.com</p>
+    <p>Contact: 01153270705</p>
+    <p style="color: #ff4444; font-weight: bold; margin-top: 15px;">Status: STILL SINGLE</p>
+    <button class="close-btn" onclick="document.getElementById('moyen-modal').style.display='none'">Tutup</button>
+</div>
+
+<script>
+    let count = 0;
+    function checkEasterEgg() {
+        count++;
+        if (count === 5) {
+            document.getElementById('moyen-modal').style.display = 'flex';
+            count = 0;
+        }
+    }
+</script>
+
+</body>
+</html>
