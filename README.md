@@ -7,7 +7,7 @@
 ### 👤 Maklumat Pembangun
 * **Nama Penuh:** FARIS HADIF BIN MOHD FAISAL
 * **No. Matriks:** D132510136
-* **Program Pengajian:** DLHW 2772
+* **Program Pengajian:** Diploma Kejuruteraan Mekanikal
 * **Lokasi:** Durian Tunggal, Melaka
 * **Pembangun Utama:** Moyen (farissmoyen@gmail.com)
 * **Hubungi:** 01153270705
@@ -19,7 +19,6 @@
 * **PWA Ready:** Boleh dipasang terus ke *home screen* telefon pintar sebagai aplikasi.
 * **Offline Support:** Menggunakan *Service Worker* untuk pemuatan (loading) yang lebih pantas.
 * **Smart Links:** Mengandungi semua pautan kritikal universiti tanpa perlu mencari secara manual.
-* **Developer Easter Egg:** Tekan tajuk "STUDENT DASHBOARD" sebanyak 5 kali untuk melihat profil pembangun.
 
 ---
 
@@ -41,7 +40,7 @@ Dashboard ini mengumpul pautan-pautan rasmi berikut:
 
 ### 🛠️ Teknologi Digunakan
 * **HTML5 & CSS3:** Untuk struktur dan rekaan responsif.
-* **JavaScript:** Untuk logik Easter Egg dan pendaftaran Service Worker.
+* **JavaScript:** Untuk pendaftaran Service Worker dan navigasi.
 * **Manifest JSON:** Untuk konfigurasi Web App (PWA).
 * **GitHub Pages:** Untuk hos laman web secara percuma dan selamat (HTTPS).
 
