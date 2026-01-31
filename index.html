@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UTeM Hub - Moyen</title>
+    <title>UTeM Hub - Moyen Edition</title>
+    
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #00aaff;
@@ -18,144 +20,68 @@
             background: radial-gradient(circle at top, #001a33 0%, #050505 100%);
             color: white;
             font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             overflow-x: hidden;
         }
 
-        /* ✨ Background Effects */
         .bg-glow {
-            position: fixed;
-            top: -100px;
-            width: 400px; height: 400px;
-            background: var(--primary);
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: -1;
+            position: fixed; top: -100px; width: 400px; height: 400px;
+            background: var(--primary); filter: blur(150px); opacity: 0.15; z-index: -1;
         }
 
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            cursor: pointer;
-        }
-
+        .header { text-align: center; padding: 50px 20px; cursor: pointer; }
         .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            margin: 0;
-            letter-spacing: 5px;
-            background: linear-gradient(90deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; margin: 0;
+            letter-spacing: 5px; background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
         }
 
-        /* 📦 Categories & Grid */
-        .category-container {
-            width: 90%;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-
+        .category-container { width: 90%; max-width: 500px; margin-bottom: 30px; }
         .category-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--primary);
-            margin: 0 0 15px 10px;
-            display: flex;
-            align-items: center;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--primary); margin: 0 0 15px 10px; display: flex; align-items: center;
         }
+        .category-label::after { content: ''; flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--primary), transparent); margin-left: 15px; }
 
-        .category-label::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-            margin-left: 15px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        
         .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--border);
+            border-radius: 24px; padding: 20px; text-align: center; text-decoration: none;
+            color: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
-
         .card:active { transform: scale(0.92); border-color: var(--primary); background: rgba(0, 170, 255, 0.1); }
-
         .card img { width: 65px; height: 65px; object-fit: contain; margin-bottom: 12px; }
-
         .card p { margin: 0; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9; }
 
         .full-width { grid-column: span 2; flex-direction: row; justify-content: center; gap: 20px; }
         .full-width img { margin-bottom: 0; width: 50px; }
 
-        /* 🎊 Notification Popup Style */
         #install-success {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 170, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--primary);
-            padding: 15px 25px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 10002;
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 170, 255, 0.2); backdrop-filter: blur(15px);
+            border: 1px solid var(--primary); padding: 15px 25px; border-radius: 50px;
+            display: flex; align-items: center; gap: 12px; z-index: 10002;
             transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
         }
-
         #install-success.show { bottom: 30px; }
 
-        /* 🐱 Easter Egg Modal */
         #moyen-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            backdrop-filter: blur(20px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10001; backdrop-filter: blur(20px);
         }
-
         .profile-card {
-            background: #111;
-            padding: 30px;
-            border-radius: 30px;
-            border: 2px solid var(--primary);
-            text-align: center;
-            width: 85%;
-            max-width: 320px;
-            box-shadow: 0 0 50px rgba(0, 170, 255, 0.3);
+            background: #111; padding: 30px; border-radius: 30px; border: 2px solid var(--primary);
+            text-align: center; width: 85%; max-width: 320px; box-shadow: 0 0 50px rgba(0, 170, 255, 0.3);
         }
-
         .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 20px; object-fit: cover; }
         .single-tag { color: #ff4444; font-weight: bold; border: 1px solid #ff4444; padding: 5px 20px; border-radius: 20px; display: inline-block; margin-top: 15px; font-size: 0.9rem; }
     </style>
@@ -240,7 +166,6 @@
     </div>
 
     <script>
-        // 🚀 Detect PWA Installation Success
         window.addEventListener('appinstalled', (evt) => {
             const popup = document.getElementById('install-success');
             popup.classList.add('show');
@@ -248,7 +173,6 @@
             setTimeout(() => popup.classList.remove('show'), 5000);
         });
 
-        // 🐱 Secret Access
         let taps = 0;
         function checkEasterEgg() {
             taps++;
