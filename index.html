@@ -2,74 +2,106 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>UTeM Hub - Moyen Edition</title>
+    
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#03001C">
+    <meta property="og:title" content="UTeM Student Hub - Moyen Edition">
+    <meta property="og:description" content="Dashboard navigasi portal UTeM dan Kalkulator GPA untuk mahasiswa.">
+    <meta property="og:image" content="utem logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #00aaff;
-            --glass: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.15);
+            --primary: #00d2ff;
+            --primary-glow: #00c3ff80;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --bg-dark: #03001C;
         }
 
         body {
-            background: radial-gradient(circle at top, #001a33 0%, #050505 100%);
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(at top left, #0e004c 0%, transparent 40%),
+                              radial-gradient(at center right, #001f3f 0%, transparent 30%);
             color: white;
             font-family: 'Rajdhani', sans-serif;
             margin: 0; padding: 0;
             min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
             overflow-x: hidden;
+            padding-bottom: 20px;
         }
 
+        /* ✨ Visual Effects */
         .bg-glow {
             position: fixed; top: -100px; width: 400px; height: 400px;
-            background: var(--primary); filter: blur(150px); opacity: 0.15; z-index: -1;
+            background: var(--primary); filter: blur(180px); opacity: 0.12; z-index: -1;
         }
 
-        .header { text-align: center; padding: 50px 20px; cursor: pointer; }
+        .header { text-align: center; padding: 60px 20px 30px; cursor: pointer; user-select: none; }
         .header h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; margin: 0;
+            font-family: 'Orbitron', sans-serif; font-size: 2rem; margin: 0;
             letter-spacing: 5px; background: linear-gradient(90deg, #fff, var(--primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+            text-shadow: 0 0 25px var(--primary-glow);
         }
 
-        .category-container { width: 90%; max-width: 500px; margin-bottom: 30px; }
+        /* 📦 Grid & Categories */
+        .container { width: 90%; max-width: 500px; margin-bottom: 30px; }
         .category-label {
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px;
             color: var(--primary); margin: 0 0 15px 10px; display: flex; align-items: center;
         }
-        .category-label::after { content: ''; flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--primary), transparent); margin-left: 15px; }
+        .category-label::after { content: ''; flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--primary), transparent); margin-left: 15px; opacity: 0.6; }
 
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .card {
-            background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--border);
-            border-radius: 24px; padding: 20px; text-align: center; text-decoration: none; color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--border);
+            border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: white;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center;
+            position: relative; overflow: hidden;
         }
-        .card:active { transform: scale(0.92); border-color: var(--primary); background: rgba(0, 170, 255, 0.1); }
-        .card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 12px; }
-        .card p { margin: 0; font-size: 0.85rem; font-weight: 700; opacity: 0.9; }
+        .card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg); transition: 0.5s; opacity: 0;
+        }
+        .card:hover::after { opacity: 1; left: 100%; top: 100%; }
+        .card:active { transform: scale(0.92); border-color: var(--primary); background: rgba(0, 210, 255, 0.1); box-shadow: 0 0 15px var(--primary-glow); }
+        .card img { width: 55px; height: 55px; object-fit: contain; margin-bottom: 12px; }
+        .card p { margin: 0; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9; }
         .full-width { grid-column: span 2; flex-direction: row; justify-content: center; gap: 20px; }
 
         /* 🧮 Calculator Style */
-        .calc-box { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; }
+        .calc-box { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; backdrop-filter: blur(10px); }
         .subject-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .calc-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; color: white; padding: 10px; font-family: 'Rajdhani', sans-serif; flex: 1; }
-        .calc-select { background: #111; color: white; border: 1px solid var(--border); border-radius: 10px; padding: 10px; flex: 1; }
-        .btn-action { background: var(--glass); border: 1px solid var(--primary); color: var(--primary); padding: 10px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-        .result-display { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); text-align: center; margin-top: 20px; }
+        .calc-input { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border); border-radius: 10px; color: white; padding: 10px; font-family: 'Rajdhani', sans-serif; flex: 1; outline: none; }
+        .calc-input:focus { border-color: var(--primary); }
+        .calc-select { background: #08002a; color: white; border: 1px solid var(--border); border-radius: 10px; padding: 10px; flex: 1; }
+        .btn-action { background: var(--glass); border: 1px solid var(--primary); color: var(--primary); padding: 10px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-action:hover { background: var(--primary); color: white; box-shadow: 0 0 15px var(--primary-glow); }
+        .result-display { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); text-align: center; margin-top: 20px; text-shadow: 0 0 10px var(--primary-glow); }
+
+        /* 🎊 UI Popups */
+        #install-success {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 210, 255, 0.2); backdrop-filter: blur(15px);
+            border: 1px solid var(--primary); padding: 15px 25px; border-radius: 50px;
+            display: flex; align-items: center; gap: 12px; z-index: 10000; transition: 0.6s;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        #install-success.show { bottom: 30px; }
 
         #moyen-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); display: none; flex-direction: column;
+            background: rgba(0,0,0,0.97); display: none; flex-direction: column;
             align-items: center; justify-content: center; z-index: 10001; backdrop-filter: blur(20px);
         }
-        .profile-card { background: #111; padding: 30px; border-radius: 30px; border: 2px solid var(--primary); text-align: center; width: 85%; max-width: 320px; }
-        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 15px; }
+        .profile-card { background: #08002a; padding: 30px; border-radius: 30px; border: 2px solid var(--primary); text-align: center; width: 85%; max-width: 320px; box-shadow: 0 0 40px var(--primary-glow); }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 15px; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -80,7 +112,7 @@
         <h1>UTEM HUB</h1>
     </div>
 
-    <div class="category-container">
+    <div class="container">
         <div class="category-label">Akademik</div>
         <div class="grid">
             <a href="https://portal.utem.edu.my/iutem/" class="card">
@@ -98,12 +130,12 @@
         </div>
     </div>
 
-    <div class="category-container">
+    <div class="container">
         <div class="category-label">Kalkulator GPA</div>
         <div class="calc-box">
             <div id="subject-list">
                 <div class="subject-row">
-                    <input type="number" placeholder="Jam Kredit" class="calc-input credit">
+                    <input type="number" placeholder="Kredit" class="calc-input credit">
                     <select class="calc-select grade">
                         <option value="4.00">A (4.00)</option><option value="3.70">A- (3.70)</option>
                         <option value="3.30">B+ (3.30)</option><option value="3.00">B (3.00)</option>
@@ -120,7 +152,7 @@
         </div>
     </div>
 
-    <div class="category-container">
+    <div class="container">
         <div class="category-label">Sumber & Peperiksaan</div>
         <div class="grid">
             <a href="https://library2.utem.edu.my/exampaper/" class="card">
@@ -142,7 +174,7 @@
         </div>
     </div>
 
-    <div class="category-container">
+    <div class="container">
         <div class="category-label">Servis Kampus</div>
         <div class="grid">
             <a href="https://utem-360.netlify.app/#/campus" class="card">
@@ -154,6 +186,11 @@
                 <p>DENTAL APPT</p>
             </a>
         </div>
+    </div>
+
+    <div id="install-success">
+        <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold;">✓</div>
+        <p style="margin: 0; font-size: 0.9rem; font-weight: bold; letter-spacing: 1px;">SYSTEM INSTALLED</p>
     </div>
 
     <div id="moyen-modal">
@@ -171,7 +208,7 @@
             const list = document.getElementById('subject-list');
             const row = document.createElement('div');
             row.className = 'subject-row';
-            row.innerHTML = `<input type="number" placeholder="Jam Kredit" class="calc-input credit">
+            row.innerHTML = `<input type="number" placeholder="Kredit" class="calc-input credit">
                              <select class="calc-select grade">
                                 <option value="4.00">A (4.00)</option><option value="3.70">A- (3.70)</option>
                                 <option value="3.30">B+ (3.30)</option><option value="3.00">B (3.00)</option>
@@ -199,8 +236,19 @@
             if(taps === 5) {
                 document.getElementById('moyen-modal').style.display = 'flex';
                 taps = 0;
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
             }
             setTimeout(() => taps = 0, 3000);
+        }
+
+        window.addEventListener('appinstalled', () => {
+            const popup = document.getElementById('install-success');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 5000);
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
